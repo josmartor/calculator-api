@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Calculator API
+  description: API of a caculator service that performs some operations (add and substract).
+  version: 1.0.0
+tags:
+  - name: calculator
+paths:
+  /calculator/operate:
+    post:
+      summary: Perform an operation
+      operationId: performOperation
+      tags:
+        - calculator
+      requestBody:
+        description: Operation object with operation type and operands
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Operation'
+      responses:
+        '200':    # status code
+          description: Result of the calculation
+          content:
+            application/json:
+              schema:
+                type: number
+components:
+  schemas:
+    Operation:
+      type: object
+      required:
+        - type
+        - operands
+      properties:
+        type:
+          type: string
+          enum:
+            - add
+            - subtract
+        operands:
+          type: array
+          items:
+            type: number
