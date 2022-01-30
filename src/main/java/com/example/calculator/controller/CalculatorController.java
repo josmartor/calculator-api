@@ -1,9 +1,10 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.service.CalculatorService;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.api.CalculatorApi;
 import org.openapitools.model.Operation;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +15,12 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class CalculatorController implements CalculatorApi {
 
+    @Autowired
+    CalculatorService calculatorService;
+
     @Override
     public ResponseEntity<BigDecimal> performOperation(@Valid Operation operation) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        BigDecimal result = calculatorService.calculate(operation);
+        return ResponseEntity.ok(result);
     }
 }
